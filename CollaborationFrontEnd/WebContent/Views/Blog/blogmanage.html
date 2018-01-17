@@ -1,0 +1,46 @@
+<h4>BLOG MANAGE</h4>
+<div data-ng-controller="blogCtrl">
+<div class="card card-1" style="margin-top:15vh">
+  <div class="row">
+    <div class="col s12">
+      <ul class="tabs">
+        <li class="tab col s3"><a href="#!blog">VIEW</a></li>
+        <!-- <li class="tab col s3"><a href="#!newblog">ADD BLOG</a></li> -->
+        
+       
+        
+      </ul>
+    </div>
+    <div id="blogview" class="col s12">
+      <div class="card card-1" style="margin-top:2vh;padding-left: 20px; padding-right: 20px; padding-top: 20px; padding-bottom: 20px">
+    	<table class="table">
+		
+		<tr >
+			<td>BLOG NAME</td><td> BLOG CONTENT</td>
+			
+			<td> USER NAME</td>
+			<td></td>
+		
+		</tr>
+		<tr  data-ng-repeat="blog in blogs">
+			<td> {{blog.blogname}} </td><td>{{blog.blogcontent}}</td>
+			<td>{{blog.username}}</td>
+			<td> <a  data-ng-click="maximum(blog.blogid)"><img data-ng-src="http://localhost:8081/CollaborationFrontEnd/Images/view.png" style="width:20px;height:20px">VIEW</a> </td>
+		</tr>
+
+	</table>
+	</div>
+    </div>
+ 
+   
+  </div>
+        
+   </div>     
+	
+</div>
+<script>
+$(document).ready(function(){
+    $('ul.tabs').tabs();
+  });
+       
+</script>

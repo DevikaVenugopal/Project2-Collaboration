@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html data-ng-app = "myApp">
+<head>
+<!-- for-mobile-apps -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<style>
+body
+{
+    background-image: url("");
+    background-repeat: no-repeat;
+	opacity:0.8;
+    background-size: 100%; 
+    padding-bottom: 75px;
+	background-attachment: fixed;
+}
+
+
+</style>
+<title>Welcome </title>
+
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a style="color: white" class="navbar-brand" href="#">WebSiteName</a>
+    </div>
+
+    <ul class="nav navbar-nav">
+    
+    <li><div data-ng-show="currentuser.role=='ROLE_ADMIN'">
+    
+    <div class="dropdown">
+        <a style="color: white" class="dropdown-toggle" data-toggle="dropdown" href="#">REQUESTS
+        <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="#!blogrequests">BLOGS</a></li>
+          <li><a href="#!userrequests">USERS</a></li>
+        </ul>
+    </div>
+    </div>
+    </li>
+    
+    <li><div data-ng-show="currentuser.role=='ROLE_ADMIN'">
+    <div class="dropdown">
+        <a style="color: white" class="dropdown-toggle" data-toggle="dropdown" href="#">MANAGE
+        <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="#!blogmanage">BLOGS</a></li>
+          <li><a href="#!jobmanage">JOBS</a></li>
+        </ul>
+    </div>
+    </div>
+    </li>
+    
+    <li><div data-ng-show="currentuser.role=='ROLE_USER'">
+    <div class="dropdown">
+    <a style="color: white" class="dropdown-toggle" data-toggle="dropdown" href="#">BLOG
+    <span class="caret"></span></a>
+    <ul class="dropdown-menu">
+    <li><a href="#!/newblog">CREATE NEW BLOG</a></li>
+    <li><a href="#!/blog">VIEW ALL BLOGS</a></li>
+    <li><a href="#!/">VIEW MY BLOGS</a></li>
+    </ul>
+    </div>
+    </div></li>
+    
+    <li><div data-ng-show="currentuser.role=='ROLE_USER'">
+    <div class="dropdown">
+    <a style="color: white" class="dropdown-toggle" data-toggle="dropdown" href="#">JOB
+    <span class="caret"></span></a>
+    <ul class="dropdown-menu">
+    <li><a href="#!/job">VIEW ALL JOBS</a></li>
+    <!-- <li><a href="#!/">VIEW MY BLOGS</a></li> -->
+    </ul>
+    </div>
+    </div></li>
+    
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+    
+    <li data-ng-hide="currentuser.role=='ROLE_ADMIN' || currentuser.role=='ROLE_USER'">
+     <a style="color: white" href="#!registration"><span class="glyphicon glyphicon-user"></span> SIGN UP</a>
+     </li>
+      
+      <li data-ng-hide="currentuser.role=='ROLE_ADMIN' || currentuser.role=='ROLE_USER'">
+      <a style="color: white" href="#!login"><span class="glyphicon glyphicon-log-in"></span> LOGIN</a>
+      </li>
+      
+      <li data-ng-show="currentuser.role=='ROLE_ADMIN' || currentuser.role=='ROLE_USER' ">
+       <a style="color: white" data-ng-click="logout()" data-ng-controller="logoutcontroller"><span class="glyphicon glyphicon-log-"></span>LOGOUT</a>
+       </li>
+       
+      <li data-ng-show="currentuser.role=='ROLE_ADMIN' || currentuser.role=='ROLE_USER' ">
+      <a style="color: white" href=""  style="color: black">{{currentuser.email}}</a>  
+      </li>
+       
+      <li data-ng-show="currentuser.role=='ROLE_USER'">
+      <a style="color: white" href="#!profile"><span class="glyphicon glyphicon-user"></span></a>
+      </li>
+      
+    </ul>
+  </div>
+</nav>
+
+<div data-ng-view></div>
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js"></script>
+<script src="./JS/angular-cookies.js"></script>
+<script src="./JS/angular-cookies.min.js"></script>
+<script src="./JS/App.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="./JS/UserController.js"></script>
+<script src="./JS/BlogController.js"></script>
+<script src="./JS/JobController.js"></script>
+<script src="./JS/ForumController.js"></script>
+</body>
+</html>

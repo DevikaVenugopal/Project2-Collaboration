@@ -1,0 +1,33 @@
+
+<div data-ng-controller="UserCtrl as us">
+
+    <form class="well form-horizontal" ng-submit="login()" method="post"  id="contact_form">
+        <fieldset>      
+
+<div class="panel panel-primary">
+<div class="panel-heading"> <h2><b><center><font color="white">Login</font></center></b></h2></div>
+    <div class="panel-body">
+        <div class="container">
+      
+                <div class="form-group">
+                    <label for="email" id="Email">Email address:</label>
+                    <input name="email" placeholder="E-Mail Address" class="form-control" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" ng-model="User.email" type="text">
+                    
+                </div>
+                <div class="form-group">
+                    <label for="pwd">Password:</label>
+                    <input name="password" placeholder="Password" class="form-control" ng-model="User.password" type="password">
+                    
+                </div>
+                <div class="checkbox">
+                    <label><input type="checkbox" name="remember">Remember me</label>
+                </div>
+                <button type="submit" class="btn-lg btn-primary col-md-12" id="button">Submit</button></br>
+               <!-- <button type="button" class="btn btn-primary btn-block">Create a new account</button>-->
+          
+        </div>
+    </div>
+</div>
+</fieldset>
+</form>
+</div>
