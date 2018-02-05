@@ -1,148 +1,194 @@
 <style>
- .card {
-    margin-top: 20px;
-    padding: 30px;
-    background-color: rgba(214, 224, 226, 0.2);
-    -webkit-border-top-left-radius:5px;
-    -moz-border-top-left-radius:5px;
-    border-top-left-radius:5px;
-    -webkit-border-top-right-radius:5px;
-    -moz-border-top-right-radius:5px;
-    border-top-right-radius:5px;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
+body
+{
+    font-family: 'Open Sans', sans-serif;
 }
-.card.hovercard {
-    position: relative;
-    padding-top: 0;
-    overflow: hidden;
-    text-align: center;
-    background-color: #fff;
-    background-color: rgba(255, 255, 255, 1);
+
+.fb-profile img.fb-image-lg{
+    z-index: 0;
+    width: 100%;  
+    margin-bottom: 10px;
 }
-.card.hovercard .card-background {
-    height: 130px;
+
+.fb-image-profile
+{
+    margin: -90px 10px 20px 80px;
+    z-index: 9;
+    width: 20%; 
 }
-.card-background img {
-    -webkit-filter: blur(25px);
-    -moz-filter: blur(25px);
-    -o-filter: blur(25px);
-    -ms-filter: blur(25px);
-    filter: blur(25px);
-    margin-left: -100px;
-    margin-top: -200px;
-    min-width: 130%;
+
+/***
+Bootstrap Line Tabs by @keenthemes
+A component of Metronic Theme - #1 Selling Bootstrap 3 Admin Theme in Themeforest: http://j.mp/metronictheme
+Licensed under MIT
+***/
+
+/* Tabs panel */
+.tabbable-panel {
+  border:1px solid #eee;
+  padding: 10px;
 }
-.card.hovercard .useravatar {
-    position: absolute;
-    top: 15px;
-    left: 0;
-    right: 0;
+
+/* Default mode */
+.tabbable-line > .nav-tabs {
+  border: none;
+  margin: 0px;
 }
-.card.hovercard .useravatar img {
-    width: 100px;
-    height: 100px;
-    max-width: 100px;
-    max-height: 100px;
-    -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
-    border-radius: 50%;
-    border: 5px solid rgba(255, 255, 255, 0.5);
+.tabbable-line > .nav-tabs > li {
+  margin-right: 2px;
 }
-.card.hovercard .card-info {
-    position: absolute;
-    bottom: 14px;
-    left: 0;
-    right: 0;
+.tabbable-line > .nav-tabs > li > a {
+  border: 0;
+  margin-right: 0;
+  color: #737373;
 }
-.card.hovercard .card-info .card-title {
-    padding:0 5px;
-    font-size: 20px;
-    line-height: 1;
-    color: #262626;
-    background-color: rgba(255, 255, 255, 0.1);
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    border-radius: 4px;
+.tabbable-line > .nav-tabs > li > a > i {
+  color: #a6a6a6;
 }
-.card.hovercard .card-info {
-    overflow: hidden;
-    font-size: 12px;
-    line-height: 20px;
-    color: #737373;
-    text-overflow: ellipsis;
+.tabbable-line > .nav-tabs > li.open, .tabbable-line > .nav-tabs > li:hover {
+  border-bottom: 4px solid #fbcdcf;
 }
-.card.hovercard .bottom {
-    padding: 0 20px;
-    margin-bottom: 17px;
+.tabbable-line > .nav-tabs > li.open > a, .tabbable-line > .nav-tabs > li:hover > a {
+  border: 0;
+  background: none !important;
+  color: #333333;
 }
-.btn-pref .btn {
-    -webkit-border-radius:0 !important;
+.tabbable-line > .nav-tabs > li.open > a > i, .tabbable-line > .nav-tabs > li:hover > a > i {
+  color: #a6a6a6;
+}
+.tabbable-line > .nav-tabs > li.open .dropdown-menu, .tabbable-line > .nav-tabs > li:hover .dropdown-menu {
+  margin-top: 0px;
+}
+.tabbable-line > .nav-tabs > li.active {
+  border-bottom: 4px solid #f3565d;
+  position: relative;
+}
+.tabbable-line > .nav-tabs > li.active > a {
+  border: 0 !important;
+  color: #333333;
+}
+.tabbable-line > .nav-tabs > li.active > a > i {
+  color: #404040;
+}
+.tabbable-line > .tab-content {
+  margin-top: -3px;
+  background-color: #fff;
+  border: 0;
+  border-top: 1px solid #eee;
+  padding: 15px 0;
+}
+.portlet .tabbable-line > .tab-content {
+  padding-bottom: 0;
+}
+
+/* Below tabs mode */
+
+.tabbable-line.tabs-below > .nav-tabs > li {
+  border-top: 4px solid transparent;
+}
+.tabbable-line.tabs-below > .nav-tabs > li > a {
+  margin-top: 0;
+}
+.tabbable-line.tabs-below > .nav-tabs > li:hover {
+  border-bottom: 0;
+  border-top: 4px solid #fbcdcf;
+}
+.tabbable-line.tabs-below > .nav-tabs > li.active {
+  margin-bottom: -2px;
+  border-bottom: 0;
+  border-top: 4px solid #f3565d;
+}
+.tabbable-line.tabs-below > .tab-content {
+  margin-top: -10px;
+  border-top: 0;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 15px;
+}
+
+.menu_title {
+    padding: 15px 10px;
+    border-bottom: 1px solid #eee;
+    margin: 0 5px;
 }
 
 
+@media (max-width:768px){
+    
+.fb-profile-text>h1{
+    font-weight: 700;
+    font-size:16px;
+}
+
+.fb-image-profile
+{
+    margin: -45px 10px 0px 25px;
+    z-index: 9;
+    width: 20%; 
+}
+}
 </style>
 
 
 
 
-<div class="col-lg-6 col-sm-6">
-    <div class="card hovercard">
-        <div class="card-background">
-            <img class="card-bkimg" alt="" src="http://lorempixel.com/100/100/people/9/">
-            <!-- http://lorempixel.com/850/280/people/9/ -->
-        </div>
-        <div class="useravatar">
-            <img alt="" src="http://lorempixel.com/100/100/people/9/">
-        </div>
-        <div class="card-info"> <span class="card-title">Pamela Anderson</span>
 
+
+
+
+
+<div class="container-fluid">
+  <div class="row" data-ng-controller="picuploadcontroller">
+  
+    <div class="fb-profile">
+    <br><br><br><br>
+        <img align="left" class="fb-image-profile thumbnail" data-ng-src="http://localhost:8081/CollaborationFrontEnd/Images/{{currentuser.username}}.jpg" onerror="this.src='http://localhost:8081/CollaborationFrondEnd/Images/user.png" style="width:250px;height:250px"/>
+        <form method="POST" enctype="multipart/form-data" action="http://localhost:8081/Middleware/user/up">
+                  
+                    <input type="file" name="uploadedFile" value="Profile pic">
+                
+                    <input type="submit" value="UPLOAD NEW PROFILE PICTURE">
+        </form>
+        <div class="fb-profile-text">
+            <h1>{{currentuser.firstname}}   {{currentuser.lastname}}</h1>
+            
         </div>
     </div>
-    <div class="btn-pref btn-group btn-group-justified btn-group-lg" role="group" aria-label="...">
-        <div class="btn-group" role="group">
-            <button type="button" id="stars" class="btn btn-primary" href="#tab1" data-toggle="tab"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                <div class="hidden-xs">Stars</div>
-            </button>
-        </div>
-        <div class="btn-group" role="group">
-            <button type="button" id="favorites" class="btn btn-default" href="#tab2" data-toggle="tab"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
-                <div class="hidden-xs">Favorites</div>
-            </button>
-        </div>
-        <div class="btn-group" role="group">
-            <button type="button" id="following" class="btn btn-default" href="#tab3" data-toggle="tab"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                <div class="hidden-xs">Following</div>
-            </button>
-        </div>
-    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="col-sm-8">
 
-        <div class="well">
-      <div class="tab-content">
-        <div class="tab-pane fade in active" id="tab1">
-          <h3>This is tab 1</h3>
-        </div>
-        <div class="tab-pane fade in" id="tab2">
-          <h3>This is tab 2</h3>
-        </div>
-        <div class="tab-pane fade in" id="tab3">
-          <h3>This is tab 3</h3>
+      <div data-spy="scroll" class="tabbable-panel">
+        <div class="tabbable-line">
+          <ul class="nav nav-tabs nav-justified">
+            <li class="active">
+              <a href="#!myblogs" data-toggle="tab"><i class="material-icons">&#xe0e5;</i>
+             My BLOGS</a>
+            </li>
+            <li class="active">
+              <a href="#!myforum" data-toggle="tab"><i class="material-icons">&#xe0bf;</i>
+            MY FORUMS</a>
+            </li>
+            <li class="active">
+              <a href="#!jobapplied" data-toggle="tab"><i class="material-icons">&#xe8f9;</i>
+            MY JOBS</a>
+            </li>
+             <!-- <li class="active">
+              <a href="#!userlist" data-toggle="tab">
+             SUGGEST FRIENDS</a>
+            </li> -->
+            <li class="active">
+              <a href="#!acceptedfriends" data-toggle="tab"><i class="material-icons">&#xe7ef;</i>
+             My FRIENDS</a>
+            </li>
+          </ul>
+ 
+             
+              
+             </div>
         </div>
       </div>
-    </div>
-    
-    </div>
-    
-    <script type="text/javascript">
+  
+  </div>
 
-    $(document).ready(function() {
-    	$(".btn-pref .btn").click(function () {
-    	    $(".btn-pref .btn").removeClass("btn-primary").addClass("btn-default");
-    	    // $(".tab").addClass("active"); // instead of this do the below 
-    	    $(this).removeClass("btn-default").addClass("btn-primary");   
-    	});
-    	});
-    </script>
-            
-    
+</div>

@@ -46,7 +46,7 @@ public class BlogDaoTest
 			blog.setBlogname("hibernate spring");
 			blog.setDislikes(4);
 			blog.setLikes(10);
-			blog.setStatus("approved");
+			blog.setStatus("A");
 			blog.setUsername("qwerty");
 			blog.setViews(14);
 			User user=(User)userDAO.getUser(1);
@@ -110,7 +110,7 @@ public class BlogDaoTest
 		public void approveBlogTest()
 		{
 			Blog blog=(Blog)blogDAO.getBlog(8);
-			blog.setStatus("Y");
+			blog.setStatus("A");
 			assertTrue("Problem in Approving  Blog",blogDAO.approveBlog(blog));
 			
 		}
@@ -123,7 +123,7 @@ public class BlogDaoTest
 		public void rejectBlogTest()
 		{
 			Blog blog=(Blog)blogDAO.getBlog(8);
-			blog.setStatus("N");
+			blog.setStatus("R");
 			assertTrue("Problem in Rejecting  Blog",blogDAO.rejectBlog(blog));
 			
 		}

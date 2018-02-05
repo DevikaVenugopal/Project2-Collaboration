@@ -1,29 +1,61 @@
-<div data-ng-controller="userrequestcontroller">
+<style>
+h2 {
+  text-align: center;
+}
 
-<div class="card card-1" style="margin-top:25px;margin-right: 25px;margin-left: 25px">
- <table>
-        <thead>
-          <tr>
-              <th>NAME</th>
-              
-              
-              <th></th>
-              <th></th>
-          </tr>
-        </thead>
+table caption {
+	padding: .5em 0;
+}
 
-        <tbody>
-          <tr  data-ng-repeat="userreq in userrequests">
-            <td>{{userreq.firstname}}   {{userreq.lastname}}</td>
-           
-           
-            <td>  <div class="btn-group"> <a data-ng-click="acceptuserrequests(userreq.email)"  class="btn btn-primary">ACCEPT</a></div> </td>
-                     <td>  <div class="btn-group"> <a data-ng-click="rejectuserrequests(userreq.email)"  class="btn btn-primary">REJECT</a></div> </td>
-         
-          </tr>
-       
-        </tbody>
-      </table>
+@media screen and (max-width: 767px) {
+  table caption {
+    border-bottom: 1px solid #ddd;
+  }
+}
+
+.p {
+  text-align: center;
+  padding-top: 140px;
+  font-size: 14px;
+}
+</style>
+
+
+
+<h2><strong>USER REQUESTS</strong></h2>
+
+<div class="container">
+  <div class="row" data-ng-controller="userrequestcontroller">
+    <div class="col-xs-12">
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th><center><strong>First Name</strong></center></th>
+              <th><center><strong>Last Name</strong></center></th>
+              <th><center><strong>Place</strong></center></th> 
+              <th><center><strong>Email</strong></center></th>
+              <th><center><strong>Action</strong></center></th>
+              
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-ng-repeat="userreq in userrequests">
+            <td>{{userreq.firstname}}</td>
+              <td>{{userreq.lastname}}</td>
+              <td>{{userreq.place}}</td>
+              <td>{{userreq.email}}</td>
+              <td><center><div class="btn-group"> <a data-ng-click="acceptuserrequests(userreq.email)" ><img data-ng-src="http://localhost:8081/CollaborationFrontEnd/Images/approve.png" style="width:20px;height:20px"></a></div> 
+                       <div class="btn-group"> <a data-ng-click="rejectuserrequests(userreq.email)"><img data-ng-src="http://localhost:8081/CollaborationFrontEnd/Images/reject.png" style="width:20px;height:20px"></a></div></center></td>
+
+            </tr>
+          </tbody>
+          <tfoot>
+            
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>
 
-</div>

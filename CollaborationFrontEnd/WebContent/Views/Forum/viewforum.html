@@ -1,0 +1,102 @@
+
+<style>
+.blogShort{ border-bottom:1px solid #ddd;}
+.add{background: #333; padding: 10%; height: 300px;}
+
+.nav-sidebar { 
+    width: 100%;
+    padding: 8px 0; 
+    border-right: 1px solid #ddd;
+}
+.nav-sidebar a {
+    color: #333;
+    -webkit-transition: all 0.08s linear;
+    -moz-transition: all 0.08s linear;
+    -o-transition: all 0.08s linear;
+    transition: all 0.08s linear;
+}
+.nav-sidebar .active a { 
+    cursor: default;
+    background-color: #34ca78; 
+    color: #fff; 
+}
+.nav-sidebar .active a:hover {
+    background-color: #37D980;   
+}
+.nav-sidebar .text-overflow a,
+.nav-sidebar .text-overflow .media-body {
+    white-space: nowrap;
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis; 
+}
+
+.btn-blog {
+    color: #ffffff;
+    background-color: #37d980;
+    border-color: #37d980;
+    border-radius:0;
+    margin-bottom:10px
+}
+.btn-blog:hover,
+.btn-blog:focus,
+.btn-blog:active,
+.btn-blog.active,
+.open .dropdown-toggle.btn-blog {
+    color: white;
+    background-color:#34ca78;
+    border-color: #34ca78;
+}
+article h2{color:#333333;}
+
+</style>
+<body>
+<div class="container" data-ng-controller="forumcontroller">
+<center><h2><strong>Forum View</strong></h2></center>
+  
+    
+     <div class="col-md-10 blogShort"  >
+                    <h3>{{ForumByid.formname}} </h3>
+                    
+                     <article>
+                     <p>
+                        {{ForumByid.formcontent}} 
+                     </p>
+                    
+                     
+                     
+                     </article>
+                
+                 </div>
+	
+  <!-- the comment box -->
+                <div class="well"  >
+                    <h4><i class="fa fa-paper-plane-o"></i> </h4>
+                    <form role="form"  data-ng-submit="addForumComment()" >
+                        <div class="form-group">
+                            <textarea class="form-control" rows="3" data-ng-model="ForumComments.forumcomm" placeholder="comments type here"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary"><i class="fa fa-reply"></i> Submit</button>
+                         <!-- <a href="#" data-ng-if="currentuser.role=='ROLE_USER'" class="btn btn-success" data-ng-click="sendforumrequests(f.forumid)">Join Now</a>
+        -->      
+                    </form>
+                </div>
+                  </div>   
+<script src="https://apis.google.com/js/plusone.js">
+</script>
+                <hr>
+                
+
+                <!-- the comments -->
+                <div>
+                <div  data-ng-repeat="com in gforumcomm">
+                <h3><b><span class="glyphicon glyphicon-user" style="font-size:20px"></span>{{com.username}}</b>
+                </h3>
+              <p>{{com.forumcomm}}</p>
+                
+             </div>
+             </div>
+             
+             <!-- <div>
+             <a data-ng-show="currentuser.role==ROLE_USER" class="btn btn-success" data-ng-click="sendforumrequests(f.forumid)">Join Now</a>
+             </div> -->

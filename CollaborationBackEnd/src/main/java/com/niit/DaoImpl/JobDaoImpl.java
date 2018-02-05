@@ -128,7 +128,7 @@ public class JobDaoImpl implements JobDao
 	{
 		Session session = sessionFactory.openSession();
 		@SuppressWarnings("unchecked")
-		ArrayList<JobApplication> checkifapplied=(ArrayList<JobApplication>)session.createQuery("from JobApplication where userid="+myid+" and jobid="+jobid).list();
+		ArrayList<JobApplication> checkifapplied=(ArrayList<JobApplication>)session.createQuery("from JobApplication where userid="+myid+" and jobid="+jobid);
 	    session.close();
 	    return checkifapplied;
 	}

@@ -118,9 +118,10 @@ public ArrayList<Job> myjobs(@PathVariable("myid") int myid)
 {
 	ArrayList<Job> myjobs=new ArrayList<Job>();
 	ArrayList<JobApplication> jobappli =jobDao.myjobs(myid);
+	System.out.println("my job applications :"+jobappli);
 	for(JobApplication jobapp:jobappli)
 	{	
-		myjobs.add(jobDao.getjob(jobapp.getJobapplyid()));
+		myjobs.add(jobDao.getjob(jobapp.getJobid()));
 		
 	}
 	return myjobs;

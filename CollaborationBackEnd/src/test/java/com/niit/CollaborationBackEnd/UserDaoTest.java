@@ -60,6 +60,7 @@ public class UserDaoTest
 			user.setPhone("9400765869");
 			user.setUsername("ghy");
 			user.setStatus("A");
+			user.setPlace("Thrissur");
 		
 			
 			

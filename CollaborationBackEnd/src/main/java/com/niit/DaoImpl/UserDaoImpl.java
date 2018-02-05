@@ -1,6 +1,7 @@
 package com.niit.DaoImpl;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -167,7 +168,7 @@ public class UserDaoImpl implements UserDao
 	{
 		Session session = sessionFactory.openSession();
 		@SuppressWarnings("unchecked")
-		ArrayList<Friend> myfriends=(ArrayList<Friend>) session.createQuery("from Friend where (U_ID="+myid+" and FRI_ID="+userid+") or (U_ID="+userid+" or FRI_ID="+myid+") and (status='YES')").list();
+		ArrayList<Friend> myfriends=(ArrayList<Friend>) session.createQuery("from Friend where (U_ID="+myid+" and friendid="+userid+") or (U_ID="+userid+" or friendid="+myid+") and (status='YES')").list();
 		session.close();
 		return myfriends;
 	}
@@ -218,7 +219,7 @@ public class UserDaoImpl implements UserDao
 	{
 		Session session=sessionFactory.openSession();
 		
-		Query query=session.createQuery("from Users where email='"+user.getEmail()+"'");
+		Query query=session.createQuery("from User where email='"+user.getEmail()+"'");
 		ArrayList<User> us=(ArrayList<User>)query.list();
 		if(us.isEmpty())
 			{
@@ -242,6 +243,13 @@ public class UserDaoImpl implements UserDao
 	  		e.printStackTrace();
 	  		return false;
 	  	}
+	}
+	
+	@Transactional
+	public List<User> requestFriend(int user) {
+     Query query = sessionFactory.getCurrentSession().createQuery("from User where userid not in(select friendid From Friend where U_ID='"+user+"') ");
+		System.err.println("UserLIst : "+(List<User>)query.list());
+		return (List<User>)query.list();
 	}
 	
 

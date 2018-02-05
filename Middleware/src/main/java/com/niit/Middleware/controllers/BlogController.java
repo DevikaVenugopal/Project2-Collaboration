@@ -108,8 +108,7 @@ public class BlogController {
 	return new ResponseEntity<String>("Problem in deleting blog",HttpStatus.BAD_REQUEST);	
 	
 	}
-	
-	
+
 	
 	}
 	
@@ -121,9 +120,8 @@ public class BlogController {
 		
 		tempblog.setBlogcontent(blogcontent);
 		tempblog.setBlogname(blogname);
-		tempblog.setStatus("A");
-		
-		
+		tempblog.setStatus("P");
+
 		boolean isSaved=blogDAO.updateBlog(tempblog);
 		if(isSaved)
 		return new ResponseEntity<String>("Blog updated successfully",HttpStatus.OK);
@@ -205,13 +203,14 @@ public class BlogController {
 		
 	}
 	
-	@RequestMapping(value="/addBlogComments/{blogid}/{username}/{blogcomm}",method=RequestMethod.GET)
-	public ResponseEntity<String> addBlogComments(@PathVariable("blogid") int blogid,@PathVariable("username") String username,@PathVariable("blogcomm") String blogcomm){
-		System.out.println(blogid+username+blogcomm);
-BlogComment blogcomment=new BlogComment();
-blogcomment.setBlogid(blogid);
-blogcomment.setUsername(username);
-blogcomment.setBlogcomm(blogcomm);
+	@RequestMapping(value="/addBlogComments/{blogid}/{UID}/{blogcomm}/{username}",method=RequestMethod.GET)
+	public ResponseEntity<String> addBlogComments(@PathVariable("blogid") int blogid,@PathVariable("UID")int  u,@PathVariable("blogcomm") String blogcomm, @PathVariable("username") String username){
+		System.out.println(blogid+u+blogcomm+username);
+        BlogComment blogcomment=new BlogComment();
+        blogcomment.setBlogid(blogid);
+        blogcomment.setUserid(u);
+        blogcomment.setBlogcomm(blogcomm);
+        blogcomment.setUsername(username);
 
 		boolean isSaved=blogDAO.addBlogComment(blogcomment);
 		if(isSaved)
@@ -223,6 +222,7 @@ blogcomment.setBlogcomm(blogcomm);
 			return new ResponseEntity<String>("Problem in adding blog comment",HttpStatus.BAD_REQUEST);
 		}
 	}
+
 	
 	
 	

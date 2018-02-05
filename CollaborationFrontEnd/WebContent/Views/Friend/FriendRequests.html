@@ -1,0 +1,62 @@
+<style>
+h2 {
+  text-align: center;
+}
+
+table caption {
+	padding: .5em 0;
+}
+
+@media screen and (max-width: 767px) {
+  table caption {
+    border-bottom: 1px solid #ddd;
+  }
+}
+
+.p {
+  text-align: center;
+  padding-top: 140px;
+  font-size: 14px;
+}
+</style>
+
+
+
+<h2><strong>FRIEND REQUESTS</strong></h2>
+
+<div class="container">
+  <div class="row" data-ng-controller="friendrequestcontroller">
+    <div class="col-xs-12">
+      <div class="table-responsive">
+     
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th><center><strong>First Name</strong></center></th>
+              <th><center><strong>Last Name</strong></center></th>
+              <th><center><strong>Place</strong></center></th> 
+              <th><center><strong>Username</strong></center></th>
+              <th><center><strong>Action</strong></center></th>
+              
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-ng-repeat="freq in myfriendreqs">
+            <td><center>{{freq.firstname}}</center></td>
+              <td><center>{{freq.lastname}}</center></td>
+              <td><center>{{freq.place}}</center></td>
+              <td><center>{{freq.username}}</center></td>
+              <td><center><a class="btn-group"> <a data-ng-click="acceptfriend(freq.userid)" ><img data-ng-src="http://localhost:8081/CollaborationFrontEnd/Images/approve.png" style="width:20px;height:20px"></a></div> 
+                        <a class="btn-group"> <a data-ng-click="rejectfriend(freq.userid)"><img data-ng-src="http://localhost:8081/CollaborationFrontEnd/Images/reject.png" style="width:20px;height:20px"></a></center></td>
+
+            </tr>
+          </tbody>
+          <tfoot>
+            
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+

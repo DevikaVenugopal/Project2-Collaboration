@@ -6,17 +6,20 @@
 <meta charset="UTF-8">
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <style>
-body
+ body
 {
-    background-image: url("");
+    background-image: url("./Images/background_2.jpg");
     background-repeat: no-repeat;
 	opacity:0.8;
     background-size: 100%; 
     padding-bottom: 75px;
 	background-attachment: fixed;
 }
-
+p.a {
+    font-family: "Times New Roman", Times, serif;
+} 
 
 </style>
 <title>Welcome </title>
@@ -27,59 +30,71 @@ body
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a style="color: white" class="navbar-brand" href="#">WebSiteName</a>
+      <!-- <b><a style="color: white" class="navbar-brand" href="#"><p class="a">ConnectUS</p></a></b> -->
+      <a href="#/" class="active"><img alt="GS" src="Images/connectus-logo.png" height="50px" width="175px"></a>
     </div>
 
     <ul class="nav navbar-nav">
     
-    <li><div data-ng-show="currentuser.role=='ROLE_ADMIN'">
-    
-    <div class="dropdown">
+    <li class="dropdown" data-ng-if="currentuser.role=='ROLE_ADMIN'">
         <a style="color: white" class="dropdown-toggle" data-toggle="dropdown" href="#">REQUESTS
         <span class="caret"></span></a>
         <ul class="dropdown-menu">
           <li><a href="#!blogrequests">BLOGS</a></li>
           <li><a href="#!userrequests">USERS</a></li>
+          <li><a href="#!forumrequests">FORUMS</a></li>
         </ul>
-    </div>
-    </div>
     </li>
     
-    <li><div data-ng-show="currentuser.role=='ROLE_ADMIN'">
-    <div class="dropdown">
+    
+    
+    
+    <li class="dropdown" data-ng-if="currentuser.role=='ROLE_ADMIN'">
         <a style="color: white" class="dropdown-toggle" data-toggle="dropdown" href="#">MANAGE
         <span class="caret"></span></a>
         <ul class="dropdown-menu">
           <li><a href="#!blogmanage">BLOGS</a></li>
           <li><a href="#!jobmanage">JOBS</a></li>
+          <li><a href="#!forummanage">FORUM</a></li>
         </ul>
-    </div>
-    </div>
+    
     </li>
     
-    <li><div data-ng-show="currentuser.role=='ROLE_USER'">
-    <div class="dropdown">
+    <li class="dropdown" data-ng-if="currentuser.role=='ROLE_USER'">
     <a style="color: white" class="dropdown-toggle" data-toggle="dropdown" href="#">BLOG
     <span class="caret"></span></a>
     <ul class="dropdown-menu">
     <li><a href="#!/newblog">CREATE NEW BLOG</a></li>
     <li><a href="#!/blog">VIEW ALL BLOGS</a></li>
-    <li><a href="#!/">VIEW MY BLOGS</a></li>
+    <!-- <li><a href="#!/myblogs">VIEW MY BLOGS</a></li> -->
     </ul>
-    </div>
-    </div></li>
+   
+    </li>
     
-    <li><div data-ng-show="currentuser.role=='ROLE_USER'">
-    <div class="dropdown">
+    <li class="dropdown" data-ng-if="currentuser.role=='ROLE_USER'">
     <a style="color: white" class="dropdown-toggle" data-toggle="dropdown" href="#">JOB
     <span class="caret"></span></a>
     <ul class="dropdown-menu">
     <li><a href="#!/job">VIEW ALL JOBS</a></li>
-    <!-- <li><a href="#!/">VIEW MY BLOGS</a></li> -->
+    <!-- <li><a href="#!/jobapplied">APPLIED JOBS</a></li> -->
     </ul>
-    </div>
-    </div></li>
     
+    </li>
+    
+    <li class="dropdown" data-ng-if="currentuser.role=='ROLE_USER'">
+    <a style="color: white" class="dropdown-toggle" data-toggle="dropdown" href="#">FORUM
+    <span class="caret"></span></a>
+    <ul class="dropdown-menu">
+    <li><a href="#!/forum">VIEW ALL FORUMS</a></li>
+    </ul>
+    
+    </li>
+    
+    
+    	<li data-ng-show="currentuser.username">
+				<a style="color: white" href="#!/userlist"><span class="glyphicon glyphicon-user"></span>SEARCH</a></li>
+	 
+      
     </ul>
     <ul class="nav navbar-nav navbar-right">
     
@@ -91,17 +106,27 @@ body
       <a style="color: white" href="#!login"><span class="glyphicon glyphicon-log-in"></span> LOGIN</a>
       </li>
       
+      <li data-ng-show="currentuser.role=='ROLE_USER'">
+      <a style="color: white" href="#!profile"><img data-ng-src="Images/{{currentuser.username}}.jpg" onerror="this.src='Images/user.png'" class="img-circle" height="40" width="40">{{currentuser.username}}</a>
+      </li>
+       
+       <li data-ng-show="currentuser.role=='ROLE_ADMIN'">
+      <a style="color: white" href=""><span class="glyphicon glyphicon-user"></span>{{currentuser.username}}</a>
+      </li>
+      
+      <li data-ng-show="currentuser.role=='ROLE_USER'">
+      <a style="color: white" href="#!chat"><i class="material-icons">&#xe0b7;</i>Chat</a></li>
+      
+      <!-- <li data-ng-show="currentuser.role=='ROLE_USER'">
+      <a style="color: white" href="#!notification"><i class="material-icons">&#xe80b;</i></a></li> -->
+      
+      <li data-ng-show="currentuser.role=='ROLE_USER'">
+      <a style="color: white" href="#!friendrequests"><i class="material-icons">&#xe7fe;</i></a></li>
+      
       <li data-ng-show="currentuser.role=='ROLE_ADMIN' || currentuser.role=='ROLE_USER' ">
        <a style="color: white" data-ng-click="logout()" data-ng-controller="logoutcontroller"><span class="glyphicon glyphicon-log-"></span>LOGOUT</a>
        </li>
-       
-      <li data-ng-show="currentuser.role=='ROLE_ADMIN' || currentuser.role=='ROLE_USER' ">
-      <a style="color: white" href=""  style="color: black">{{currentuser.email}}</a>  
-      </li>
-       
-      <li data-ng-show="currentuser.role=='ROLE_USER'">
-      <a style="color: white" href="#!profile"><span class="glyphicon glyphicon-user"></span></a>
-      </li>
+      
       
     </ul>
   </div>
@@ -123,5 +148,13 @@ body
 <script src="./JS/BlogController.js"></script>
 <script src="./JS/JobController.js"></script>
 <script src="./JS/ForumController.js"></script>
+<script src="./JS/FriendController.js"></script>
+<script src="./JS/ChatController.js"></script>
+<script src="./JS/ChatService.js"></script>
+<script src="./JS/sockjs.js"></script>
+<script src="./JS/sockjs.min.js"></script>
+<script src="./JS/stomp.js"></script>
+<script src="./JS/stomp-node.js"></script>
+<script src="./JS/stomp.min.js"></script>
 </body>
 </html>

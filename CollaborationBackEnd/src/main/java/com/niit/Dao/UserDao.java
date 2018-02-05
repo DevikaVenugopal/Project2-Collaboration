@@ -1,6 +1,7 @@
 package com.niit.Dao;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.niit.Model.Friend;
 import com.niit.Model.User;
@@ -20,6 +21,7 @@ public interface UserDao
 		public boolean checkLoginsimp(User user);
 		public boolean checkLoginsemail(User user);
 		public boolean rejectusers(User user);
+		public List<User> requestFriend(int user);
 	
 
 }

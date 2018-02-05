@@ -1,7 +1,7 @@
-app.controller("blogCtrl", function ($scope,$http,$location,$rootScope) {
+app.controller("blogCtrl", function ($scope,$http,$location,$rootScope,$route,$cookieStore) {
     console.log("blog controller",$rootScope.currentuser.email)	 
 	 $scope.Blog={blogname:'',blogcontent:'',status:'P',likes:'0',dislikes:'0',views:'0',username:$rootScope.currentuser.email};
-	$scope.BlogComment={blogcomm:'',blogid:'',username:''};
+	$scope.BlogComment={blogcomm:'',blogid:'',userid:'',username:''};
 
 	function fetchAllBlogs()
 	{
@@ -72,9 +72,9 @@ app.controller("blogCtrl", function ($scope,$http,$location,$rootScope) {
 		 console.log("view incremented")
 
 		 $http.get("http://localhost:8081/Middleware/blogs/getBlogById/"+idd).then(function(response){
-				$scope.blogbyid=response.data;
+				$rootScope.blogbyid=response.data;
 				$rootScope.gblog=response.data;
-				 
+				$cookieStore.put('blog',$rootScope.gblog); 
 				
 				console.log("blog fetched successfully")				
 				},function(error){
@@ -88,7 +88,7 @@ app.controller("blogCtrl", function ($scope,$http,$location,$rootScope) {
 				
 				$rootScope.gblogcomm=response.data;
 				console.log($rootScope.gblogcomm)
-				
+				$cookieStore.put('blogcomm',$rootScope.gblogcomm);
 			},function(error)
 			{
 				
@@ -96,7 +96,7 @@ app.controller("blogCtrl", function ($scope,$http,$location,$rootScope) {
 		
 		 
 		
-		 $location.path('/blog')
+		 $location.path('/blogview')
 		 
 	 }
 
@@ -106,6 +106,7 @@ app.controller("blogCtrl", function ($scope,$http,$location,$rootScope) {
 		 $http.post("http://localhost:8081/Middleware/blogs/addBlog",$scope.Blog).then(fetchAllBlogs(),function(response)
 				 {
 			 $scope.User=response.data;
+			 alert("Blog added successfully..Wait for admin approval")
 			 console.log("Blog added successfully")
 								
 			},function(error){
@@ -126,7 +127,7 @@ app.controller("blogCtrl", function ($scope,$http,$location,$rootScope) {
 				},function(error){
 				
 				});
-		 $location.path('/blogforedit')	 
+		 $location.path('/updateblog')	 
 	 }
 	 
 	 
@@ -136,8 +137,21 @@ app.controller("blogCtrl", function ($scope,$http,$location,$rootScope) {
 	 $scope.editBlog=function()
 	 {
 		
-	console.log($scope.Blog.blogname+" "+$scope.Blog.blogcontent)
+		 console.log("blog nammme : ",$scope.Blog.blogname+"-?Blog Contents "+$scope.Blog.blogcontent)
+			console.log("rootscope blog",$rootScope.eblog)
+			console.log("scope blog",$scope.Blog)
+			if($scope.Blog.blogname=='')
+				{
+				  
+				  $scope.Blog.blogname=$rootScope.eblog.blogname;
+				}
+			if($scope.Blog.blogcontent=='')
+			{
+			  $scope.Blog.blogcontent=$scope.eblog.blogcontent;
+			}
+			console.log("scope blog last ",$scope.Blog)
 		 $http.get("http://localhost:8081/Middleware/blogs/updateBlog/"+$rootScope.eblog.blogid+"/"+$scope.Blog.blogname+"/"+$scope.Blog.blogcontent).then(function(response){
+			 alert("Blog updated successfully..Wait for admin approval")
 			 console.log("Blog updated successfully");
 								
 			},function(error){
@@ -146,13 +160,14 @@ app.controller("blogCtrl", function ($scope,$http,$location,$rootScope) {
 		 
 		 
 		 $http.get("http://localhost:8081/Middleware/blogs/getBlogById/"+$rootScope.eblog.blogid).then(function(response){
+			 $route.reload();
 				$rootScope.eblog=response.data; 
 					
 				},function(error){
 				
 				});
 		
-		$location.path('/blog')	 
+		$location.path('/myblogs')	 
 		 
 	 }
 	 
@@ -160,6 +175,7 @@ app.controller("blogCtrl", function ($scope,$http,$location,$rootScope) {
 	 {
 		console.log("in delete blog method")
 		 $http.get("http://localhost:8081/Middleware/blogs/deleteBlog/"+idd).then(fetchAllBlogs(),function(response){
+			 alert("Blog deleted!!!!")
 			 console.log("Blog deleted successfully");
 								
 			},function(error){
@@ -179,6 +195,7 @@ app.controller("blogCtrl", function ($scope,$http,$location,$rootScope) {
 	 {
 		console.log("in reject blog method")
 		 $http.get("http://localhost:8081/Middleware/blogs/rejectBlog/"+idd).then(fetchBlog(idd),fetchAllBlogs(),function(response){
+			 alert("Sorry....Blog Rejected")
 			 console.log("Blog rejected successfully");
 								
 			},function(error){
@@ -192,6 +209,7 @@ app.controller("blogCtrl", function ($scope,$http,$location,$rootScope) {
 	 {
 		console.log("in like blog method")
 		 $http.get("http://localhost:8081/Middleware/blogs/likeBlog/"+idd).then(fetchBlogById(idd),function(response){
+			 $rootscope.likes=response.data
 			 console.log("Blog liked successfully");
 								
 			},function(error){
@@ -222,9 +240,9 @@ app.controller("blogCtrl", function ($scope,$http,$location,$rootScope) {
 	 $scope.addBlogComment=function()
 	 {
 		console.log("in add blogComment method")
-		console.log($rootScope.gblog.blogid+$rootScope.currentuser.email+$scope.BlogComments.blogcomm)
+		console.log($rootScope.gblog.blogid+$rootScope.currentuser.usrname+$scope.BlogComment.blogcomm)
 
-		$http.get("http://localhost:8081/Middleware/blogs/addBlogComments/"+$rootScope.gblog.blogid+"/"+$rootScope.currentuser.email+"/"+$scope.BlogComments.blogcomm).then(function(response){
+		$http.get("http://localhost:8081/Middleware/blogs/addBlogComments/"+$rootScope.gblog.blogid+"/"+$rootScope.currentuser.userid+"/"+$scope.BlogComment.blogcomm+"/"+$rootScope.currentuser.username).then(function(response){
 			 console.log("BlogComment added successfully")
 								
 			},function(error){
@@ -310,7 +328,7 @@ app.controller("blogrequestcontroller", function ($scope,$http,$location,$rootSc
 			 $location.path('/blogrequests')
 								
 			},function(error){
-				console.error("Error while accepting blogrequests Forum");
+				console.error("Error while accepting blogrequests");
 			});
 		 
 	 }

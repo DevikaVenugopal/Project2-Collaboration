@@ -1,6 +1,7 @@
 package com.niit.Middleware.controllers;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,11 +30,11 @@ public class FriendController {
 	@RequestMapping(value="/addFriend/{myid}/{friendid}",method=RequestMethod.GET)
 	public ResponseEntity<String> addBlog(@PathVariable("myid") int myid,@PathVariable("friendid") int friendid){
 	
-Friend friend=new Friend();
-
-friend.setU_ID(myid);
-friend.setFRI_ID(friendid);
-friend.setStatus("A");
+    Friend friend=new Friend();
+    System.out.println("friend"+friendid);
+    friend.setU_ID(myid);
+    friend.setFriendid(friendid);
+    friend.setStatus("P");
 
 		
 		
@@ -62,17 +63,14 @@ friend.setStatus("A");
 	{
 		if(s.getU_ID()==myid)
 		{
-			user.add(userDao.getUserbyId(s.getFRI_ID()));
+			user.add(userDao.getUserbyId(s.getFriendid()));
 					}
-		else if(s.getFRI_ID()==myid)
+		else if(s.getFriendid()==myid)
 		{
 		 user.add(userDao.getUserbyId(s.getU_ID()));
 		}
 	}
-	
-	
-	
-	return user;
+    return user;
 		 
 	 }
 	
@@ -88,9 +86,9 @@ friend.setStatus("A");
 		{
 			if(s.getU_ID()==myid)
 			{
-				myfriendsname.add(userDao.getUser(s.getFRI_ID()).getEmail());
+				myfriendsname.add(userDao.getUser(s.getFriendid()).getEmail());
 			}
-			else if(s.getFRI_ID()==myid)
+			else if(s.getFriendid()==myid)
 			{
 				myfriendsname.add(userDao.getUser(s.getU_ID()).getEmail());
 			}
@@ -128,9 +126,9 @@ for(Friend s:pend)
 {
 	if(s.getU_ID()==myid)
 	{
-		pendnames.add(userDao.getUser(s.getFRI_ID()).getEmail());
+		pendnames.add(userDao.getUser(s.getFriendid()).getEmail());
 	}
-	else if(s.getFRI_ID()==myid)
+	else if(s.getFriendid()==myid)
 	{
 		pendnames.add(userDao.getUser(s.getU_ID()).getEmail());
 	}
@@ -169,9 +167,9 @@ for(User uu:searchFriends)
 	{
 		if(s.getU_ID()==myid)
 		{
-			user.add(userDao.getUserbyId(s.getFRI_ID()));
+			user.add(userDao.getUserbyId(s.getFriendid()));
 		}
-		else if(s.getFRI_ID()==myid)
+		else if(s.getFriendid()==myid)
 		{
 			user.add(userDao.getUserbyId(s.getU_ID()));
 		}
@@ -209,9 +207,9 @@ for(User us:user)
 
 			if(f.getU_ID()==myid)
 			{
-				frequests.add(userDao.getUserbyId(f.getFRI_ID()));
+				frequests.add(userDao.getUserbyId(f.getFriendid()));
 			}
-			else if(f.getFRI_ID()==myid)
+			else if(f.getFriendid()==myid)
 			{
 				frequests.add(userDao.getUserbyId(f.getU_ID()));
 			} 
@@ -219,24 +217,43 @@ for(User us:user)
 	 return frequests; 
 	 }
 	 
-     @RequestMapping(value="/unfriend/{myid}/{friendid}",method=RequestMethod.GET)
-     public User unfriend(@PathVariable("friendid") int friendid,@PathVariable("myid") int myid)
-     {
-     Friend fr=friendDao.getfriendrequest(myid, friendid);
-     friendDao.delete(fr);
-     return null;
-     }
+	 @RequestMapping(value="/unfriend/{myid}/{friendid}",method=RequestMethod.GET)
+	 public User unfriend(@PathVariable("friendid") int friendid,@PathVariable("myid") int myid)
+	 {
+	 	List<Friend> fr=friendDao.getfriendrequest(myid, friendid);
+	 	for(Friend f:fr)
+	 	{
+	 		friendDao.delete(f);
+	 	}
+
+	 return null;
+	 }
 
 
-     @RequestMapping(value="/acceptfriend/{myid}/{friendid}",method=RequestMethod.GET)
-     public User acceptfriend(@PathVariable("friendid") int friendid,@PathVariable("myid") int myid)
-     {
-     Friend fr=friendDao.getfriendrequest(myid, friendid);
-     fr.setStatus("YES");
-     friendDao.acceptfriendrequest(fr);
-     return null;
-     }
+	 @RequestMapping(value="/acceptfriend/{myid}/{friendid}",method=RequestMethod.GET)
+	 public User acceptfriend(@PathVariable("friendid") int friendid,@PathVariable("myid") int myid)
+	 {
+	 	List<Friend> fr=friendDao.getfriendrequest(myid, friendid);
+	 	for(Friend f:fr)
+	 	{
+	 		f.setStatus("A");
+	 		friendDao.acceptfriendrequest(f);
+	 	}
+	 return null;
+	 }
 
+	 @RequestMapping(value="/rejectfriend/{myid}/{friendid}",method=RequestMethod.GET)
+	 public User rejectfriend(@PathVariable("friendid") int friendid,@PathVariable("myid") int myid)
+	 {
+	 	List<Friend> fr=friendDao.getfriendrequest(myid, friendid);
+	 	for(Friend f:fr)
+	 	{
+	 		f.setStatus("R");
+	 		friendDao.rejectfriendrequest(f);
+	 	}
+
+	 return null;
+	 }
 
 
 

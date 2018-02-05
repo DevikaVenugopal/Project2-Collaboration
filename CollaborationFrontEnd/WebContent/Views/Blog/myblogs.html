@@ -1,0 +1,59 @@
+
+<style>
+h2 {
+  text-align: center;
+}
+
+table caption {
+	padding: .5em 0;
+}
+
+@media screen and (max-width: 767px) {
+  table caption {
+    border-bottom: 1px solid #ddd;
+  }
+}
+
+.p {
+  text-align: center;
+  padding-top: 140px;
+  font-size: 14px;
+}
+</style>
+
+<h2><strong>MY BLOGS</strong></h2>
+
+<div class="container">
+  <div class="row" data-ng-controller="blogCtrl">
+    <div class="col-xs-12">
+     <div class="table-responsive">
+     <br>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th><center><strong>Blog Name</strong></center></th>
+              <th><center><strong>Blog Content</strong></center></th>
+              <th><center><strong>Status</strong></center></th> 
+              <th><center><strong>Action</strong></center></th>
+              
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-ng-repeat="blog in myblogs">
+            <td> <center>{{blog.blogname}}</center> </td>
+            <td>{{blog.blogcontent}}</td>
+			<td><center>{{blog.status}}</center></td>
+           <td><center><a href="" data-ng-click="maximum(blog.blogid)"><img data-ng-src="http://localhost:8081/CollaborationFrontEnd/Images/view.png" style="width:20px;height:20px"></a>
+             <a data-ng-show="currentuser.role=='ROLE_USER'" href="" data-ng-click=deleteBlog(blog.blogid)><img data-ng-src="http://localhost:8081/CollaborationFrontEnd/Images/reject.png" style="width:20px;height:20px"></a>
+             <a  data-ng-show="currentuser.role=='ROLE_USER'" href="" data-ng-click=fetchforedit(blog.blogid)><img data-ng-src="http://localhost:8081/CollaborationFrontEnd/Images/edit.png" style="width:20px;height:20px"></a></center></td>
+            </tr>
+          </tbody>
+          <tfoot>
+            
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+

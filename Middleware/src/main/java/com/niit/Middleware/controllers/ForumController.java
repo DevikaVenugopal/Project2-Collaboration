@@ -1,6 +1,5 @@
 package com.niit.Middleware.controllers;
 
-
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,20 +12,24 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.niit.Dao.ForumDao;
+import com.niit.Dao.NotificationDao;
 import com.niit.Dao.UserDao;
 import com.niit.Model.Forum;
 import com.niit.Model.ForumComment;
 import com.niit.Model.ForumRequest;
+import com.niit.Model.Notification;
 import com.niit.Model.User;
 
 @RestController
 @RequestMapping("/forums")
-public class ForumController {
+public class ForumController
+{
 	@Autowired 
 	ForumDao forumDao;
 	@Autowired 
 	UserDao userDao;
-	
+	@Autowired 
+	NotificationDao notificationDao;
 	
 	@RequestMapping(value="/getAllForums",method=RequestMethod.GET)
 	public  ArrayList<Forum> getAllForums(){
@@ -59,24 +62,26 @@ public class ForumController {
 		
 	}
 	return new ResponseEntity<Forum>(forumDao.getForum(forumId),HttpStatus.OK);	
-			
-	
-	
-	
+
 	}
 	
 	
-	
-
-	
-	
-	
-	
-	@RequestMapping(value="/deleteForum/{forumid}",method=RequestMethod.GET)
+    @RequestMapping(value="/deleteForum/{forumid}",method=RequestMethod.GET)
 	public ResponseEntity<Forum> deleteForum(@PathVariable("forumid") int forumId){
-	
+
 	Forum forum=forumDao.getForum(forumId);
 	forumDao.deleteForum(forum);
+	ArrayList<ForumRequest> fr=forumDao.getAllForumRequestAll(forumId);
+	for(ForumRequest f:fr)
+	{
+		forumDao.deleteForumRequest(f);
+	}
+	
+	ArrayList<ForumComment> fc=forumDao.getAllForumCommentsById(forumId);
+	for(ForumComment fcc:fc)
+	{
+		forumDao.deleteForumComment(fcc);
+	}
 	if(forumDao.getForum(forumId)==null){
 		
 	}
@@ -110,29 +115,29 @@ public class ForumController {
 	public ResponseEntity<ForumComment> addForumcomments(@PathVariable("forumid") int forumid,@PathVariable("username") String username,@PathVariable("forumcomm") String forumcomm){
 
 		
-		ForumComment forumcomment=new ForumComment();
-		forumcomment.setForumcomm(forumcomm);
-		forumcomment.setForumid(forumid);
-		forumcomment.setUsername(username);
+		ForumComment forumcomments=new ForumComment();
+		forumcomments.setForumcomm(forumcomm);
+		forumcomments.setForumid(forumid);
+		forumcomments.setUsername(username);
 
-		boolean isSaved=forumDao.addForumComment(forumcomment);
+		boolean isSaved=forumDao.addForumComment(forumcomments);
 		if(isSaved)
-		return new ResponseEntity<ForumComment>(forumcomment,HttpStatus.OK);
+		return new ResponseEntity<ForumComment>(forumcomments,HttpStatus.OK);
 		else
-			return new ResponseEntity<ForumComment>(forumcomment,HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<ForumComment>(forumcomments,HttpStatus.BAD_REQUEST);
 		
 	}
 	
 	
 	
 	@RequestMapping(value="/updateForumComments",method=RequestMethod.PUT)
-	public ResponseEntity<ForumComment> updateBlogComments(@RequestBody ForumComment forumcomment){
+	public ResponseEntity<ForumComment> updateBlogComments(@RequestBody ForumComment forumcomments){
 		
-		boolean isSaved=forumDao.updateForumComment(forumcomment);
+		boolean isSaved=forumDao.updateForumComment(forumcomments);
 		if(isSaved)
-		return new ResponseEntity<ForumComment>(forumcomment,HttpStatus.OK);
+		return new ResponseEntity<ForumComment>(forumcomments,HttpStatus.OK);
 		else
-			return new ResponseEntity<ForumComment>(forumcomment,HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<ForumComment>(forumcomments,HttpStatus.BAD_REQUEST);
 		
 	}
 	
@@ -141,7 +146,7 @@ public class ForumController {
 	public ResponseEntity<ForumComment> deleteForumComment(@PathVariable("forumcommentid") int forumcommentId){
 	
 	ForumComment forumComments=forumDao.getForumComment(forumcommentId);
-forumDao.deleteForumComment(forumComments);
+    forumDao.deleteForumComment(forumComments);
 	if(forumDao.getForumComment(forumcommentId)==null)
 	{
 		
@@ -195,6 +200,17 @@ forumDao.deleteForumComment(forumComments);
 	}
 	
 	
+	@RequestMapping(value="/leaveforum/{forumid}/{myid}",method=RequestMethod.GET)
+	public void leaveforum(@PathVariable("myid") int myid,@PathVariable("forumid") int forumid)
+	{
+		User user=(User)userDao.getUser(myid);
+		ForumRequest fr=forumDao.myforreq(user.getEmail(), forumid);
+		forumDao.deleteForumRequest(fr);
+		
+		
+	}
+	
+	
 	
 	@RequestMapping(value="/checkIfMyForum/{forumid}/{myid}",method=RequestMethod.GET)
 	public ResponseEntity<ArrayList<ForumRequest>> getcheckifmyforum(@PathVariable("forumid") int forumId,@PathVariable("myid") int myid){
@@ -218,7 +234,7 @@ forumDao.deleteForumComment(forumComments);
 	ForumRequest fr=new ForumRequest();
 	fr.setForumid(forumId);
 	fr.setUserid(myid);
-	fr.setStatus("A");
+	fr.setStatus("P");
 	fr.setUsername(u.getEmail());
 	fr.setForumname(f.getFormname());
 	
@@ -258,9 +274,35 @@ forumDao.deleteForumComment(forumComments);
 	public void approveForumRequets(@PathVariable("forumReqId") int forumreqid)
 	{
 		ForumRequest fr=forumDao.getForumRequest(forumreqid);
-		fr.setStatus("YES");
+		fr.setStatus("A");
 boolean IsSaved=forumDao.acceptForumRequest(fr);
+
+String noti="your forumrequest for forum:"+fr.getForumname()+" is approved";
+Notification not=new Notification();
+not.setName(noti);
+not.setUsername(fr.getUsername());
+
+notificationDao.addNotifications(not);
+
 	}
+	
+	
+	@RequestMapping(value="/rejectForumRequests/{forumReqId}",method=RequestMethod.GET)
+	public void rejectForumRequets(@PathVariable("forumReqId") int forumreqid)
+	{
+		ForumRequest fr=forumDao.getForumRequest(forumreqid);
+		fr.setStatus("R");
+        boolean IsSaved=forumDao.rejectForumRequest(fr);
+        String noti="your forumrequest for forum:"+fr.getForumname()+" is approved";
+        Notification not=new Notification();
+        not.setName(noti);
+        not.setUsername(fr.getUsername());
+
+        notificationDao.addNotifications(not);
+	}
+	
+	
+	
 	
 	@RequestMapping(value="/forumreqbyforumid/{forumid}",method=RequestMethod.GET)
 	public ArrayList<User> getforumusers(@PathVariable("forumid") int forumid)
@@ -273,6 +315,5 @@ boolean IsSaved=forumDao.acceptForumRequest(fr);
 		}
 		return users;
 	}
-
 
 }

@@ -1,6 +1,6 @@
 app.controller("UserCtrl", function ($scope,$location,$http,$rootScope,$cookieStore) {
 	 $scope.msg = "Register  page";
-	 $scope.User={username:'',firstname:'',lastname:'',gender:'',email:'',password:'',status:'P',role:'ROLE_USER',isonline:'NO',phone:''};
+	 $scope.User={username:'',firstname:'',lastname:'',gender:'',email:'',password:'',place:'',status:'P',role:'ROLE_USER',isonline:'NO',phone:''};
 	 $scope.register=function()
 	 {
 		 console.log("in register controller angualar");
@@ -138,5 +138,22 @@ app.controller("userrequestcontroller", function ($scope,$http,$location,$rootSc
 		 
 	 }
 
+	
 
 });
+
+app.controller("picuploadcontroller", function ($scope,$location,$http,$rootScope,$cookieStore) {
+
+	 $http.post("http://localhost:8081/Middleware/user/login",$rootScope.currentuser).then(function(response)
+			 {
+		
+		
+		 $rootScope.currentuser=response.data;
+		 $cookieStore.put('user',response.data);
+		
+		
+			 });
+	
+	
+});
+

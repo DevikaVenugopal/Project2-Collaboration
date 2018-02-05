@@ -14,21 +14,25 @@ import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
 
 import com.niit.Model.Blog;
+import com.niit.Model.BlogComment;
 import com.niit.Model.Forum;
+import com.niit.Model.ForumComment;
+import com.niit.Model.ForumRequest;
 import com.niit.Model.Friend;
 import com.niit.Model.Job;
 import com.niit.Model.JobApplication;
+import com.niit.Model.Notification;
 import com.niit.Model.User;
 
 @Configuration
 @ComponentScan("com.niit")
 //@EnableTransactionManagement
 public class DBConfig 
-{
-	
+{	
 	    @Autowired
 	    @Bean
-	    public SessionFactory sessionFactory(DataSource dataSource) {
+	    public SessionFactory sessionFactory(DataSource dataSource)
+	    {
 	        LocalSessionFactoryBuilder sessionBuilder  = new LocalSessionFactoryBuilder(dataSource);
 	        /*sessionBuilder.setProperty("hibernate.show_sql", "true");*/
 	        
@@ -40,10 +44,10 @@ public class DBConfig
 	        sessionBuilder.addAnnotatedClass(Forum.class);
 	        sessionBuilder.addAnnotatedClass(Friend.class);
 	        sessionBuilder.addAnnotatedClass(JobApplication.class);
-	        
-
-	        
-	        
+	        sessionBuilder.addAnnotatedClass(BlogComment.class);
+	        sessionBuilder.addAnnotatedClass(Notification.class);
+	        sessionBuilder.addAnnotatedClass(ForumRequest.class);
+	        sessionBuilder.addAnnotatedClass(ForumComment.class);
 	        return sessionBuilder.buildSessionFactory();
 	    }
 	    @Autowired

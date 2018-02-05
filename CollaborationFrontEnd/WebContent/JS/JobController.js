@@ -17,6 +17,7 @@ $scope.Job={jobprofile:'',jobdesc:'',qualification:'',salary:'',company:'',compa
 
 		.then(function(response) {
 			$rootScope.myjobs = response.data;
+			console.log("jobs",$rootScope.myjobs)
 			console.log("all my jobs fetched")
 		});
 		
@@ -31,6 +32,7 @@ $scope.Job={jobprofile:'',jobdesc:'',qualification:'',salary:'',company:'',compa
 		console.log('entered insertJobs');
 		$http.post('http://localhost:8081/Middleware/jobs/addJob',
 				$scope.Job).then(fetchAllJobs(), function(response) {
+					alert("successfully jobs entered")
 			console.log("successful jobs entered");
 			$location.path("/jobmanage")
 		});
@@ -41,8 +43,9 @@ $scope.Job={jobprofile:'',jobdesc:'',qualification:'',salary:'',company:'',compa
 	{
 		console.log('apply job'+idd);
 		$http.get('http://localhost:8081/Middleware/jobs/applyJob/'+idd+"/"+$rootScope.currentuser.userid).then(fetchAllJobs(), function(response) {
+			alert("Job applied successfully")
 			console.log("successful jobs applied");
-			$location.path("/blog")
+			$location.path("/jobapplied")
 		});
 	}
 	
@@ -104,7 +107,7 @@ $scope.Job={jobprofile:'',jobdesc:'',qualification:'',salary:'',company:'',compa
 	        ]
 	       
 	    }).then(function (response) {
-	    	//alert("deleted successfully")
+	    	alert("Jobs deleted successfully")
 	    	$route.reload();
 	        console.log(response);
 	    }, function (response) {
@@ -146,35 +149,35 @@ $scope.Job={jobprofile:'',jobdesc:'',qualification:'',salary:'',company:'',compa
 		console.log("ejob",$rootScope.ejob,idd)
 	if($scope.Job.jobprofile==null)
 		{
-		alert("jobprofile null");
+		//alert("jobprofile null");
 		
 		$scope.Job.jobprofile=$rootScope.ejob['jobprofile'];
 			}
 		
 		if($scope.Job.jobdesc==null)
 		{
-			alert("jobdesc null");
+			//alert("jobdesc null");
 		$scope.Job.jobdesc=$rootScope.ejob['jobdesc'];
 			}
 		
 		
 		if($scope.Job.qualification==null)
 		{
-			alert("qualification null");
+			//alert("qualification null");
 		$scope.Job.qualification=$rootScope.ejob['qualification'];
 			}
 		
 		
 		if($scope.Job.salary==null)
 		{
-			alert("salary null");
+			//alert("salary null");
 		$scope.Job.salary=$rootScope.ejob.salary;
 			}
 		
 		
 		if($scope.Job.company==null)
 		{
-			alert("company null");
+			//alert("company null");
 		$scope.Job.company=$rootScope.ejob.company;
 			}
 		
@@ -187,7 +190,7 @@ $scope.Job={jobprofile:'',jobdesc:'',qualification:'',salary:'',company:'',compa
 		console.log("job",$scope.Job);
 		$http.post("http://localhost:8081/Middleware/jobs/updateJob",$scope.Job).then(fetchAllJobs(), function(response)
 				{
-		
+		    alert("Job Ubdated successfully")
 			 console.log("job updated successfully");
 				
 		},function(error){

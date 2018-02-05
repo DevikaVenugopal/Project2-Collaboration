@@ -24,12 +24,12 @@ public class ForumComment implements Serializable
 	
     @Column(name = "ForumComm", nullable = false)
     private String forumcomm;
-
-	@Column(name = "Forumid", nullable = false)
-	private int forumid;
+    
+    @Column(name = "Forumid", nullable = false)
+    private int forumid;
 	
 	@Column(name = "Username", nullable = false)
-	private String username;
+	  private String username;
 
 	public int getForumcomid() {
 		return forumcomid;

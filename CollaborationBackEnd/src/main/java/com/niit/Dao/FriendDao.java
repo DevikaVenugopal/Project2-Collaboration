@@ -1,6 +1,7 @@
 package com.niit.Dao;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.niit.Model.Friend;
 import com.niit.Model.User;
@@ -11,7 +12,7 @@ public interface FriendDao
 	public boolean delete(Friend friend );
 	public boolean accept(int friendreqid);
 	public boolean reject(int friendreqid);
-	public Friend getfriendrequest(int friendreqid,int myid);
+	public List<Friend> getfriendrequest(int friendreqid,int myid);
 	public ArrayList<Friend> getAllFriendRequestsByUser(int userid);
 	public ArrayList<Friend> getAllFriend();
 	public ArrayList<Friend> getAllMyFriend(int myid);
@@ -20,5 +21,6 @@ public interface FriendDao
 public User getUserById(int userid);
 public Friend acceptfriendrequest(Friend friend);
 public ArrayList<Friend> getAllMyFriendpend(int myid);
+public Friend rejectfriendrequest(Friend friend);
 
 }

@@ -15,9 +15,6 @@ import org.springframework.stereotype.Component;
 @Table(name="JobApplication")
 public class JobApplication implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	@Id

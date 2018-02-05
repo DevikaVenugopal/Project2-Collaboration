@@ -24,6 +24,28 @@ public class User implements Serializable
 	
 	@Column(name = "Firstname", nullable = false)
 	    private String firstname;
+	
+	@Column(name = "Cover")
+    private String cover;
+
+	public String getCover() {
+		return cover;
+	}
+
+	public void setCover(String cover) {
+		this.cover = cover;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	@Column(name = "Image")
+    private String image;
 	 
 	@Column(name = "Lastname", nullable = false)
 	    private String lastname;
@@ -51,6 +73,9 @@ public class User implements Serializable
 
 	@Column(name = "UserName", nullable = false)
     private String username;
+	
+	@Column(name = "Place")
+    private String place;
 
 	public int getUserid() {
 		return userid;
@@ -139,6 +164,14 @@ public class User implements Serializable
 	public void setUsername(String username) {
 		this.username = username;
 	}
+
+	public String getPlace() {
+		return place;
+	}
+
+	public void setPlace(String place) {
+		this.place = place;
+	}
+
 	
-    
 }

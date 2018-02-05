@@ -25,7 +25,7 @@ public class Friend implements Serializable
 	
     private int U_ID;
 
-    private int FRI_ID;
+    private int friendid;
 
 	@Column(name="Status")
 	private  String status;
@@ -46,12 +46,14 @@ public class Friend implements Serializable
 		U_ID = u_ID;
 	}
 
-	public int getFRI_ID() {
-		return FRI_ID;
+	
+
+	public int getFriendid() {
+		return friendid;
 	}
 
-	public void setFRI_ID(int fRI_ID) {
-		FRI_ID = fRI_ID;
+	public void setFriendid(int friendid) {
+		this.friendid = friendid;
 	}
 
 	public String getStatus() {

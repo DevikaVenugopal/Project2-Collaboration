@@ -1,21 +1,76 @@
 app.controller("friendrequestcontroller", function ($scope,$http,$location,$rootScope) {
-
-	$http.get("http://localhost:8081/Middleware/friend/getAllMyFriendRequests/"+ $rootScope.currentuser.userid)
+$scope.Friend={U_ID:'',friendid:'',status:'P'}
+	/*$http.get("http://localhost:8081/Middleware/friend/getAllMyFriendRequests/"+ $rootScope.currentuser.userid)
 
 	.then(function(response) {
 		$scope.myfriendreqs = response.data;
 		console.log("all my friendsreqs  fetched")
 	},function(error)
 	{
-		console.log("Error on retrieving forums")
-	});
+		console.log("Error on retrieving friend")
+	});*/
+function fetchAllfriendreq()
+{
 
+ $http.get("http://localhost:8081/Middleware/friend/getAllMyFriendRequests/"+ $rootScope.currentuser.userid)
+ 
+ .then(function(response) {
+		$scope.myfriendreqs = response.data;
+		console.log("all my friendsreqs  fetched")
+	},function(error)
+	{
+		console.log("Error on retrieving friend")
+	});
+}
+fetchAllfriendreq();
+
+	
+$scope.acceptfriend = function(friendid)
+{
+console.log("in unfriend method",friendid)
+	$http.get("http://localhost:8081/Middleware/friend/acceptfriend/"+$rootScope.currentuser.userid+'/'+friendid)
+	.then(fetchAllfriendreq(), function(response) {
+		console.log("successful friend add ");
+		$location.path("/profile")
+	});
+}
+
+$scope.rejectfriend = function(friendid)
+{
+console.log("in unfriend method")
+	$http.get("http://localhost:8081/Middleware/friend/rejectfriend/"+$rootScope.currentuser.userid+'/'+friendid)
+	.then(fetchAllfriendreq(), function(response) {
+		console.log("Rejected friend request");
+		$location.path("/profile")
+	});
+}
 });
 
 
 
 
-app.controller("friendcontroller", function ($scope,$http,$location,$rootScope) {
+app.controller("friendcontroller", function ($scope,$http,$location,$rootScope,$cookieStore) {
+	 
+	function fetchAlluser()
+	{
+		
+	 $http.get("http://localhost:8081/Middleware/user/getAllUsers/"+ $rootScope.currentuser.userid)
+	    .then(function(response)
+	    		{
+	    	
+	    console.log(response.data)
+		 $scope.users=response.data;
+	    
+		 /*$location.path('/userlist')*/
+							
+		},function(error){
+			console.error("Error while fetching requests");
+		});
+	}
+	
+	
+   fetchAlluser();
+	
 	
 	function fetchAllUsers()
 	{
@@ -36,7 +91,7 @@ app.controller("friendcontroller", function ($scope,$http,$location,$rootScope) 
 
 		.then(function(response) {
 			$scope.otherusers = response.data;
-			console.log("all other users fetched")
+			console.log("all other user fetched")
 		},function(error)
 		{
 			console.log("Error on retrieving forums")
@@ -77,7 +132,7 @@ app.controller("friendcontroller", function ($scope,$http,$location,$rootScope) 
 		$http.get('http://localhost:8081/Middleware/friend/addFriend/'+$rootScope.currentuser.userid+'/'+friendid)
 		.then(fetchAllUsers(), function(response) {
 			console.log("successful friend add ");
-			$location.path("/mywall")
+			$location.path("/userlist")
 		});
 	}
 	
@@ -90,25 +145,17 @@ app.controller("friendcontroller", function ($scope,$http,$location,$rootScope) 
 		$http.get('http://localhost:8081/Middleware/friend/unfriend/'+$rootScope.currentuser.userid+'/'+friendid)
 		.then(fetchAllUsers(), function(response) {
 			console.log("successful friend add ");
-			$location.path("/mywall")
+			$location.path("/profile")
 		});
 	}
 	
-	$scope.acceptfriend = function(friendid)
-	{
-	console.log("in unfriend method")
-		$http.get('http://localhost:8081/Middleware/friend/acceptfriend/'+$rootScope.currentuser.userid+'/'+friendid)
-		.then(fetchAllUsers(), function(response) {
-			console.log("successful friend add ");
-			$location.path("/mywall")
-		});
-	}
+	
 	
 	$rootScope.friendpreview=function(friendid)
 	{
 		if(friendid==$rootScope.currentuser.userid)
 			{
-			$location.path("/mywall")
+			$location.path("/profile")
 			}
 		else
 			{
@@ -172,9 +219,31 @@ app.controller("friendcontroller", function ($scope,$http,$location,$rootScope) 
 		{
 			console.log("Error on retrieving blogs")
 		});	
-		$location.path("/friendwall")
+		$location.path("/")
 	}
 	}
 	
 	
 });
+/*app.controller("userlistcontroller", function ($scope,$http,$location,$rootScope,$cookieStore) {
+	function fetchAllusers()
+	{
+	
+	 $http.get("http://localhost:8081/Middleware/user/getAllUsers")
+	    .then(function(response)
+	    		{
+	    	
+	    
+		 $scope.users=response.data;
+	
+		 $location.path('/userlist')
+							
+		},function(error){
+			console.error("Error while fetching requests");
+		});
+	}
+	
+	
+	fetchAllusers();
+});*/
+

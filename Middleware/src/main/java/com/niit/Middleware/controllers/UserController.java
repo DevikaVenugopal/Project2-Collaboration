@@ -1,6 +1,12 @@
 package com.niit.Middleware.controllers;
 
+import java.io.BufferedOutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,8 +15,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+
 import com.niit.Dao.UserDao;
+import com.niit.Dao.JobDao;
+import com.niit.Dao.FriendDao;
+import com.niit.Model.Friend;
+import com.niit.Model.Job;
 import com.niit.Model.User;
 
 @RequestMapping("/user")
@@ -19,6 +33,12 @@ public class UserController
 {
 	@Autowired
 	UserDao userDao;
+	
+	@Autowired
+	JobDao jobDao;
+	
+	@Autowired
+	FriendDao friendDao;
 	
 	@RequestMapping(value="/registerUser",method=RequestMethod.POST)
 	public ResponseEntity<User> createUser(@RequestBody User user){
@@ -33,11 +53,11 @@ public class UserController
 		
 	}
 	
-	@RequestMapping(value="/getAllUsers",method=RequestMethod.GET)
-	public ArrayList<User> getAllUser()
+	@RequestMapping(value="/getAllUsers/{userid}",method=RequestMethod.GET)
+	public ArrayList<User> getAllUser(@PathVariable("userid") int userid)
 	{
 		System.out.println("in rest controller getallusers");
-		ArrayList<User> user=(ArrayList<User>)userDao.getAllUser();
+		ArrayList<User> user=(ArrayList<User>)userDao.requestFriend(userid);
 		System.out.println("in rest controller getallusers");
 		return user;
 		
@@ -56,7 +76,7 @@ public class UserController
 	}
 	
 	@RequestMapping(value="/login",method=RequestMethod.POST)
-	public ResponseEntity<User> login(@RequestBody User user){
+	public ResponseEntity<User> login(@RequestBody User user,HttpSession http){
 
 		if(userDao.checkLogin(user))
 		{
@@ -65,6 +85,7 @@ public class UserController
 			 System.out.println("3..."+tempuser.getPassword());
 		     tempuser.setIsonline("YES");
 			 userDao.updateOnlineStatus(tempuser);
+			 http.setAttribute("currentuser",tempuser);
 			 return new ResponseEntity<User>(tempuser,HttpStatus.OK);	
 		}
 		else
@@ -117,10 +138,10 @@ public class UserController
 		 
 	 }
 	 
-     /*@RequestMapping(value="/job",method=RequestMethod.POST)
+     @RequestMapping(value="/job",method=RequestMethod.POST)
 	 public ResponseEntity<Job> getJob()
      {		
-		return new ResponseEntity<Job>(JobDao.getjob(3),HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<Job>(jobDao.getjob(98),HttpStatus.BAD_REQUEST);
 			
 	 }
 	 
@@ -129,16 +150,16 @@ public class UserController
 	 @RequestMapping(value="/up",method = RequestMethod.POST)
 	 public ModelAndView  upload(HttpServletRequest request,@RequestParam("uploadedFile") MultipartFile file,HttpSession session )
 	 {
-	 	   String filepath = request.getSession().getServletContext().getRealPath("/") + "resources/product/" + file.getOriginalFilename();
-	 		
+	 	   /*String filepath = request.getSession().getServletContext().getRealPath("/") + "resources/product/" + file.getOriginalFilename();
+	 		*/
 		 
 		 User user = (User)session.getAttribute("currentuser");
-		 	System.out.println(user.getEmail());
-		 		//user.setImage(user.getEmail()+".jpg");
+		 	System.out.println(user.getUsername());
+		 		user.setImage(user.getUsername()+".jpg");
 		 	userDao.updateOnlineStatus(user); 
 		 	
 		 	
-	 	    String filepat ="C:/Users/user/eclipse-workspace/CollaborationFrontEnd/WebContent/resources/images/" + user.getEmail()+".jpg";
+	 	    String filepath ="C:/devika/project2-final/project2(Re)/CollaborationFrontEnd/WebContent/Images/" + user.getUsername()+".jpg";
 	 		
 	 		
 	 		System.out.println(filepath);
@@ -155,7 +176,7 @@ public class UserController
 	 			}
 	 		
 	 	
-	 	ModelAndView mv = new ModelAndView("backhome");
+	 	ModelAndView mv = new ModelAndView("/Backhome");
 		return mv;
 	 }
 	 
@@ -163,14 +184,14 @@ public class UserController
 	 @RequestMapping(value="/upcover",method = RequestMethod.POST)
 	 public ModelAndView uploadcover(HttpServletRequest request,@RequestParam("uploadedFile") MultipartFile file,HttpSession session )
 	 {
-	 	   String filepath = request.getSession().getServletContext().getRealPath("/") + "resources/product/" + file.getOriginalFilename();
-	 		
+	 	  /* String filepath = request.getSession().getServletContext().getRealPath("/") + "resources/product/" + file.getOriginalFilename();
+	 		*/
 		 
-		 User user = (User)session.getAttribute("currentUser");
+		 User user = (User)session.getAttribute("currentuser");
 		 	
 		 		//user.setCover(user.getEmail()+"cover.jpg");
 		 	userDao.updateOnlineStatus(user);
-	 	    String filepat ="C:/Users/user/eclipse-workspace/SayhiFrontend/WebContent/resources/images/" +user.getEmail()+"cover.jpg";
+	 	    String filepath ="" +user.getUsername()+"cover.jpg";
 	 		String img=file.getOriginalFilename();
 	 		System.out.println(img);
 	 		System.out.println(filepath);
@@ -202,9 +223,9 @@ public class UserController
 		{
 			if(f.getU_ID()==myid)
 			{
-				users.add(userDao.getUserbyId(f.getFRI_ID()));
+				users.add(userDao.getUserbyId(f.getFriendid()));
 			}
-			else if(f.getFRI_ID()==myid)
+			else if(f.getFriendid()==myid)
 			{
 				users.add(userDao.getUserbyId(f.getU_ID()));
 			} 
@@ -212,23 +233,23 @@ public class UserController
 		}
 	 return users;
 	
-}*/
+}
 	 
 	 
-	/* @RequestMapping(value="/friendsfriends/{userid}/{myid}",method = RequestMethod.GET)
+	 @RequestMapping(value="/friendsfriends/{userid}/{myid}",method = RequestMethod.GET)
 	 public ArrayList<User> friendsfriends(@PathVariable("userid") int userid,@PathVariable("myid") int myid )
 	 { 
 		 System.out.println(userid+" "+myid);
 	 ArrayList<User> fp=new ArrayList<User>(); 
-	 ArrayList<Friend> myfriends=(ArrayList<Friend>)FriendDao.getAllMyFriendpend(myid);
+	 ArrayList<Friend> myfriends=(ArrayList<Friend>)friendDao.getAllMyFriendpend(myid);
 	 ArrayList<String> myfriendsemail=new ArrayList<String>();
 	 for(Friend s:myfriends)
 	 {
 	 	if(s.getU_ID()==myid)
 	 	{
-	 	 myfriendsemail.add(userDao.getUser(s.getFRI_ID()).getEmail());
+	 	 myfriendsemail.add(userDao.getUser(s.getFriendid()).getEmail());
 	 	}
-	 	else if(s.getFRI_ID()==myid)
+	 	else if(s.getFriendid()==myid)
 	 	{
 	 		System.out.println(userDao.getUser(s.getU_ID()).getEmail());
 	 		
@@ -237,15 +258,15 @@ public class UserController
 	 }
 
 	 
-	 ArrayList<Friend> hisfriends=(ArrayList<Friend>)FriendDao.getAllMyFriend(userid);
+	 ArrayList<Friend> hisfriends=(ArrayList<Friend>)friendDao.getAllMyFriend(userid);
 	 ArrayList<String> hisfriendsemail=new ArrayList<String>();
 	 for(Friend s:hisfriends)
 	 {
 	 	if(s.getU_ID()==userid)
 	 	{
-	 		hisfriendsemail.add(userDao.getUser(s.getFRI_ID()).getEmail());
+	 		hisfriendsemail.add(userDao.getUser(s.getFriendid()).getEmail());
 	 	}
-	 	else if(s.getFRI_ID()==userid)
+	 	else if(s.getFriendid()==userid)
 	 	{
 	 		hisfriendsemail.add(userDao.getUser(s.getU_ID()).getEmail());
 	 	}
@@ -287,6 +308,6 @@ public class UserController
 	 
 
 
-}*/
+}
  
 }

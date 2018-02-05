@@ -1,6 +1,7 @@
 app.controller("forumcontroller", function ($scope,$http,$location,$rootScope,$cookieStore) {
 	console.log("in forum controller")
 	$scope.Forum={formname:'',formcontent:''};
+	$scope.ForumRequest={userid:'',forumid:'',forumname:'',username:'',status:'P'}
 	$scope.ForumComments={forumcomm:'',forumid:'',userid:'',username:''};
 	function fetchAllForums()
 	{
@@ -48,13 +49,13 @@ app.controller("forumcontroller", function ($scope,$http,$location,$rootScope,$c
 	
 	
 	
-	function fetchForumByIdd(idd)
+	/*function fetchForumByIdd(idd)
 	{
 		
 		 $http.get("http://localhost:8081/Middleware/forums/getForumById/"+idd).then(function(response){
 				
 
-				$rootScope.ForumByid=response.data; 
+				$rootScope.Forumid=response.data; 
 				
 				},function(error){
 					console.log("Error on retrieving forum")
@@ -72,24 +73,21 @@ app.controller("forumcontroller", function ($scope,$http,$location,$rootScope,$c
 		
 
 			});
-	$location.path('/forumview');
-		
-		
-		
-	}
 	
+	}*/
 	
 	 $scope.addForum=function()
 	 {
 		console.log("in add forum method")
 		 $http.post("http://localhost:8081/Middleware/forums/addForum",$scope.Forum).then(fetchAllForums(),function(response){
+			 alert("Forum added successfully")
 			 console.log("Forum added successfully")
 			 
 								
 			},function(error){
 				console.error("Error while adding forum")
 			});
-		$location.path('/blog')
+		$location.path('/forummanage')
 		 
 	 }
 	 
@@ -104,17 +102,10 @@ console.log('in fetch forum by id method'+idd)
 			},function(error){
 				console.log("Error on retrieving forum")
 			});
-	
-	
 
 $http.get("http://localhost:8081/Middleware/forums/checkIfMyForum/"+idd+"/"+$rootScope.currentuser.userid).then(function(response){
 	$rootScope.fcheck=response.data;
 	$cookieStore.put('forumcheck',$rootScope.fcheck);
-	
-		
-
-
-	
 
 		});
 
@@ -137,18 +128,15 @@ $http.get("http://localhost:8081/Middleware/forums/forumreqbyforumid/"+idd)
 {
 	
 	$rootScope.forusers=response.data;
-	
+	$location.path('/viewforum');
 	
 },function(error)
 {
 	
-});
+});/*
+console.log("forum forusers :",$rootScope.forusers)
+console.log("forum comments :",$rootScope.gforumcomm)*/
 
-
-
-
-
-$location.path('/forumview');
 }
 
 $scope.fetchforumforedit=function(idd)
@@ -163,7 +151,7 @@ $scope.fetchforumforedit=function(idd)
 				console.log("Error on retrieving forum")
 			});
 	
-	$location.path('/forumforedit')
+	$location.path('/updateforum')
 
 }
 
@@ -189,12 +177,14 @@ $scope.fetchforumforedit=function(idd)
 		
 		 $http.get("http://localhost:8081/Middleware/forums/getForumById/"+$rootScope.eforum.forumid).then(function(response){
 				$rootScope.eforum=response.data; 
+				 alert("Forum updated successfully")
+
 					
 				},function(error){
 				
 				});
 		 
-		 $location.path('/blog')
+		 $location.path('/forummanage')
 		 
 		 
 		 
@@ -205,6 +195,7 @@ $scope.fetchforumforedit=function(idd)
 	 {
 		console.log("in delete forum method")
 		 $http.get("http://localhost:8081/Middleware/forums/deleteForum/"+idd).then(fetchAllForums(),function(response){
+			alert("Forum deleted successfully")
 			 console.log("Forum deleted successfully");
 			 location.path('/forummanage')
 								
@@ -212,12 +203,10 @@ $scope.fetchforumforedit=function(idd)
 				console.error("Error while deleting Forum");
 			});
 		
-		 $location.path('/blog')
+		 $location.path('/forummanage')
 	 }
 	
-
-	
-	
+	 
 	$scope.myforums=function()
 	{
 		
@@ -234,15 +223,15 @@ $scope.fetchforumforedit=function(idd)
 	
 	
 	
-	 $rootScope.sendforumrequests=function()
+	 $rootScope.sendforumrequests=function(id)
 	 {
 		console.log('in send froum request')
-		console.log($rootScope.ForumByid.forumid+$rootScope.currentuser.userid)
-		 $http.get("http://localhost:8081/Middleware/forums/addForumReq/"+$rootScope.ForumByid.forumid+"/"+$rootScope.currentuser.userid).then(fetchForumByIdd($rootScope.ForumByid.forumid),function(response){
+		 $http.get("http://localhost:8081/Middleware/forums/addForumReq/"+id+"/"+$rootScope.currentuser.userid).then(fetchForumByIdd($rootScope.ForumByid.forumid),function(response){
+			 alert("Forumrequested successfully")
 			 console.log("Forumrequested successfully");
 		 });
 		
-		 $location.path('/blog')
+		 $location.path('/forum')
 	 }
 	 
 	 
@@ -254,7 +243,7 @@ $scope.fetchforumforedit=function(idd)
 			 
 		 });
 		
-		 $location.path('/blog')
+		 $location.path('/forum')
 	 }
 	 
 	 
@@ -263,9 +252,9 @@ $scope.fetchforumforedit=function(idd)
 	 $scope.addForumComment=function()
 	 {
 		console.log("in add forumComment method")
-		console.log($rootScope.ForumByid.forumid+$rootScope.currentuser.email+$scope.ForumComments.forumcomm)
+		console.log($rootScope.ForumByid.forumid+$rootScope.currentuser.username+$scope.ForumComments.forumcomm)
 
-		$http.get("http://localhost:8081/Middleware/forums/addForumComments/"+$rootScope.ForumByid.forumid+"/"+$rootScope.currentuser.email+"/"+$scope.ForumComments.forumcomm).then(function(response){
+		$http.get("http://localhost:8081/Middleware/forums/addForumComments/"+$rootScope.ForumByid.forumid+"/"+$rootScope.currentuser.username+"/"+$scope.ForumComments.forumcomm).then(function(response){
 			 console.log("BlogComments added successfully")
 								
 			},function(error){
@@ -284,11 +273,12 @@ $scope.fetchforumforedit=function(idd)
 			
 		});		
 		
-		$location.path('/forumview')	 
+		$location.path('/viewforum')	 
 		 
 	 }
 	
-});
+	
+	});
 
 
 app.controller("forumrequestcontroller", function ($scope,$http,$location,$rootScope) {
@@ -328,6 +318,7 @@ app.controller("forumrequestcontroller", function ($scope,$http,$location,$rootS
 		$location.path('/forummanage')
 		 
 	 }
+	 
 	 $rootScope.rejectforumrequests=function(id)
 	 {
 		 

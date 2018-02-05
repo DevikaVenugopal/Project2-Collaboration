@@ -105,7 +105,7 @@ public class BlogDaoImpl implements BlogDao
 	public boolean updateBlog(Blog blog) {
 		try
 		{
-		sessionFactory.getCurrentSession().saveOrUpdate(blog);
+		sessionFactory.getCurrentSession().update(blog);
 		return true;
 		}
 		catch(Exception e)
@@ -245,7 +245,7 @@ public class BlogDaoImpl implements BlogDao
 	{
         Session ssn=sessionFactory.openSession();
 		
-		org.hibernate.Query q= ssn.createQuery("from BlogComments where blogid="+blogid);
+		org.hibernate.Query q= ssn.createQuery("from BlogComment where blogid="+blogid);
 		@SuppressWarnings("unchecked")
 		ArrayList<BlogComment> l=(ArrayList<BlogComment>) q.list();
 		

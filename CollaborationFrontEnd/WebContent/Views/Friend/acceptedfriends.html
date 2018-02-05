@@ -1,0 +1,33 @@
+<h2><center><strong>FRIENDS</strong></center></h2>
+
+<div class="container">
+  <div class="row" data-ng-controller="friendcontroller">
+    <div class="col-xs-12">
+      <div class="table-responsive">
+     
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th><center><strong>Username</strong></center></th>
+              <th><center><strong>Place</strong></center></th> 
+              <th><center><strong>Image</strong></center></th>
+              <th><center><strong>Action</strong></center></th>
+              
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-ng-repeat="myf in myfriends">
+              <td><center>{{myf.username}}</center></td>
+              <td><center>{{myf.place}}</center></td>
+              <td><center><img data-ng-src="Images/{{myf.username}}.jpg" onerror="this.src='Images/user.png'" class="img-circle" height="40" width="40"></center></td>
+              <td><center><button type="button" class="btn btn-danger" data-ng-click="unfriend(myf.userid)">UNFRIEND</button></center></td>
+            </tr>
+          </tbody>
+          <tfoot>
+            
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

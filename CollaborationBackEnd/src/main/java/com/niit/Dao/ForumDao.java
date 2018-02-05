@@ -1,10 +1,10 @@
 package com.niit.Dao;
 
 import java.util.ArrayList;
-
 import com.niit.Model.Forum;
 import com.niit.Model.ForumComment;
 import com.niit.Model.ForumRequest;
+
 
 public interface ForumDao 
 {
@@ -31,5 +31,8 @@ public interface ForumDao
 		
 	public ArrayList<ForumRequest> checkIfMyForum(int ForumId, int myid);
 	public ArrayList<ForumRequest> forreqbyforid(int forumid);
-
+	public ArrayList<ForumRequest> getAllForumRequestAll(int forumid);
+	public boolean deleteForumRequest(ForumRequest forumreq);
+	public boolean rejectForumRequest(ForumRequest forumrequest);
+	public ForumRequest myforreq(String email,int forumid);
 }

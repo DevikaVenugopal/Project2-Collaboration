@@ -9,21 +9,20 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
- @Entity
+
+@Entity
 @Component
 @Table(name="ForumRequests")
-public class ForumRequest implements Serializable {
+public class ForumRequest implements Serializable 
+{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue
 	@Column(name="ForReqID",nullable = false)
 	int forreqid;
-
+	
 	@Column(name="UserId",nullable = false)
 	int userid;
 	
@@ -88,5 +87,4 @@ public class ForumRequest implements Serializable {
 	}
 	
 	
-
 }

@@ -27,8 +27,22 @@ public class BlogComment
 	@Column(name = "Blogid", nullable = false)
 	private int blogid;
 	
+	@Column(name = "Userid", nullable = false)
+	private int userid;
 	@Column(name = "Username", nullable = false)
 	private String username;
+	
+	
+	
+	
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
 	public int getBlogcomid() {
 		return blogcomid;
@@ -54,14 +68,15 @@ public class BlogComment
 		this.blogid = blogid;
 	}
 
-	public String getUsername() {
-		return username;
+	public int getUserid() {
+		return userid;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setUserid(int userid) {
+		this.userid = userid;
 	}
-	
+
 	
 
+	
 }

@@ -9,11 +9,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
+
 @Entity
 @Component
 @Table(name="FORUM")
-public class Forum implements Serializable
-{
+public class Forum implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -25,6 +25,7 @@ public class Forum implements Serializable
     private String formname;
 	@Column(name = "FormContent", nullable = false)
     private String formcontent;
+	
 	public int getForumid() {
 		return forumid;
 	}

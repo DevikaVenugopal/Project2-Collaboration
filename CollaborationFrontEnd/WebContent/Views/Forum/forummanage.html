@@ -1,0 +1,64 @@
+<style>
+h2 {
+  text-align: center;
+}
+
+table caption {
+	padding: .5em 0;
+}
+
+@media screen and (max-width: 767px) {
+  table caption {
+    border-bottom: 1px solid #ddd;
+  }
+}
+
+.p {
+  text-align: center;
+  padding-top: 140px;
+  font-size: 14px;
+}
+</style>
+<h2><strong>FORUM MANAGE</strong></h2>
+
+<div class="container">
+  <div class="row" data-ng-controller="forumcontroller">
+    <div class="col-xs-12">
+    <br>
+    <div class="btn-group btn-group-justified">
+  <a href="#!forum" class="btn btn-info">VIEW</a>
+  <a href="#!newforum" class="btn btn-info">ADD Forum</a>
+</div>
+    <br><br>
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead>
+            <tr >
+              <th><center><strong>Forum Name</strong></center></th>
+              <th><center><strong>Forum Content</strong> </center></th>
+              <th><center><strong>Action</strong></center></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-ng-repeat="for in forums">
+            <td><center>{{for.formname}}</center></td>
+            <td>{{for.formcontent}}</td>  
+            <td><center><a href="" data-ng-click="fetchforumbyid(for.forumid)"><img data-ng-src="http://localhost:8081/CollaborationFrontEnd/Images/view.png" style="width:20px;height:20px"></a>
+            <a data-ng-show="currentuser.role=='ROLE_ADMIN'" href="" data-ng-click=deleteForum(for.forumid)><img data-ng-src="http://localhost:8081/CollaborationFrontEnd/Images/reject.png" style="width:20px;height:20px"></a>
+            <a data-ng-show="currentuser.role=='ROLE_ADMIN'" href="" data-ng-click=fetchforumforedit(for.forumid)><img data-ng-src="http://localhost:8081/CollaborationFrontEnd/Images/edit.png" style="width:20px;height:20px"></a></center></td>
+ </tr>
+          </tbody>
+          <tfoot>
+            
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+

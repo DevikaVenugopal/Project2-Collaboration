@@ -1,49 +1,70 @@
-<h4>JOB MANAGE</h4>
-<div class="card card-1" style="margin-top:5vh;margin-left:50px;margin-right: 50px;padding-left: 20px; padding-right: 20px; padding-top: 20px; padding-bottom: 20px">
-  <div class="row">
-    <div class="col s12">
-      <ul class="tabs">
-        <li class="tab col s3"><a href="#!job">VIEW</a></li>
-        <li class="tab col s3"><a class="active" href="#!newjob">ADD JOB</a></li>
-        
-      </ul>
-    </div>
-    <div id="Job" class="col s12">
-    <div data-ng-controller="jobcontroller">
-    	
-    	<div class="card card-1" style="margin-top:5vh;padding-left: 20px; padding-right: 20px; padding-top: 20px; padding-bottom: 20px">
-    	
-    	 <table class="table">
-<tr>
-<td>JOB NAME </td><td>  JOB DESCRIPTION  </td><td>  JOB QUALIFICATION  </td><td>  SALARY  </td><td>  COMPANY </td><td>  COMPANY DESCRIPTION </td><td>  ACTION  </td>
-<td></td>
+<style>
+h2 {
+  text-align: center;
+}
 
-</tr>
-<tr data-ng-repeat="jobb in jobsdata">
-<td>{{jobb.jobprofile}} </td><td>  {{jobb.jobdesc}}</td><td> {{jobb.qualification}} </td><td>{{jobb.salary}} </td><td>  {{jobb.company}}</td><td>{{jobb.companydesc}} </td>
-<td>  <a href="" data-ng-click="getjob(jobb.jobid)"><img data-ng-src="http://localhost:8081/CollaborationFrontEnd/Images/view.png" style="width:20px;height:20px">VIEW</a></td>
-<td>       <div  data-ng-show="currentuser.role=='ROLE_ADMIN'"><a href="" data-ng-click=deletejob(jobb.jobid)><img data-ng-src="http://localhost:8081/CollaborationFrontEnd/Images/reject.png" style="width:20px;height:20px">DELETE</a></div></td>
-<td>       <div  data-ng-show="currentuser.role=='ROLE_ADMIN'"><a href="" data-ng-click=fetchjobforedit(jobb.jobid)><img data-ng-src="http://localhost:8081/CollaborationFrontEnd/Images/edit.png" style="width:20px;height:20px">EDIT</a></div></td>
+table caption {
+	padding: .5em 0;
+}
 
-</tr>
-</table>
-    	 
-	</div>
+@media screen and (max-width: 767px) {
+  table caption {
+    border-bottom: 1px solid #ddd;
+  }
+}
 
-    </div>
+.p {
+  text-align: center;
+  padding-top: 140px;
+  font-size: 14px;
+}
+</style>
+
+
+
+<h2><strong>JOB MANAGE</strong></h2>
+
+<div class="container">
+  <div class="row" data-ng-controller="jobcontroller">
+    <div class="col-xs-12">
+    <br>
+    <div class="btn-group btn-group-justified">
+  <a href="#!job" class="btn btn-info">VIEW</a>
+  <a href="#!newjob" class="btn btn-info">ADD JOB</a>
+</div>
+    <br><br>
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th><center><strong>JOB NAME </strong></center></th>
+              <th><center><strong>JOB DESCRIPTION </strong> </center></th>
+              <th><center><strong>JOB QUALIFICATION</strong> </center></th> 
+              <th><center><strong>SALARY</strong></center></th>
+              <th><center><strong>COMPANY</strong></center></th>
+              <th><center><strong>ACTION</strong></center></th>
+              
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-ng-repeat="jobb in jobsdata">
+            <td><center>{{jobb.jobprofile}}</center></td>
+            <td><center>{{jobb.jobdesc}}</center></td>
+			<td><center>{{jobb.qualification}}</td>
+			<td><center>{{jobb.salary}}</center></td>
+			<td><center>{{jobb.company}}</center></td>
+            <td><center> 
+           <a href=""  data-ng-show="currentuser.role=='ROLE_ADMIN'"><a href="" data-ng-click=deletejob(jobb.jobid)><img data-ng-src="http://localhost:8081/CollaborationFrontEnd/Images/reject.png" style="width:20px;height:20px"></a>
+           <a href=""  data-ng-show="currentuser.role=='ROLE_ADMIN'"><a href="" data-ng-click=fetchjobforedit(jobb.jobid)><img data-ng-src="http://localhost:8081/CollaborationFrontEnd/Images/edit.png" style="width:20px;height:20px"></a></center></td>
+
+ </tr>
+          </tbody>
+          <tfoot>
+            
+          </tfoot>
+        </table>
+      </div>
     </div>
   </div>
-        
-   </div>      
+</div>
 
-<script>
-$(document).ready(function(){
-    $('ul.tabs').tabs();
-  });
-       
-$(document).ready(function(){
-    // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
-    $('.modal').modal();
-  });
-     
-</script>
