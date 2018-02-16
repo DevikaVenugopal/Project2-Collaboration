@@ -3,7 +3,6 @@ package com.niit.DaoImpl;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.transaction.Transactional;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -12,6 +11,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.niit.Dao.UserDao;
 import com.niit.Model.Friend;

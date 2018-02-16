@@ -284,6 +284,7 @@ app.controller("blogCtrl", function ($scope,$http,$location,$rootScope,$route,$c
 	 {
 		console.log("in delete blogcomment method")
 		 $http.get("http://localhost:8081/Middleware/blogs/deleteBlogComment/"+idd).then(function(response){
+			 
 			 console.log("Blogcomment deleted successfully");
 								
 			},function(error){

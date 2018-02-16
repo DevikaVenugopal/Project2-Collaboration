@@ -18,7 +18,6 @@ app.controller("UserCtrl", function ($scope,$location,$http,$rootScope,$cookieSt
 	 }
 	 
 	 
-	 
 	 $scope.login=function()
 	 {
 		 console.log("in login method");
